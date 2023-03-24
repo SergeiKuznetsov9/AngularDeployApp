@@ -1,0 +1,44 @@
+<!-- "email": "Rembo@yandex.ru", "mobile": "375 44 8562348", -->
+
+<table mat-table [dataSource]="httpCustomer.customers" class="mat-elevation-z8" #customersTable>
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Имя</th>
+    <td mat-cell *matCellDef="let customer">{{ customer.name }}</td>
+  </ng-container>
+
+  <!-- Location Column -->
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef>Город</th>
+    <td mat-cell *matCellDef="let customer">{{ customer.location }}</td>
+  </ng-container>
+
+  <!-- Еmail Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Электронная почта</th>
+    <td mat-cell *matCellDef="let customer">{{ customer.email }}</td>
+  </ng-container>
+
+  <!-- Location Column -->
+  <ng-container matColumnDef="mobile">
+    <th mat-header-cell *matHeaderCellDef>Мобильный телефон</th>
+    <td mat-cell *matCellDef="let customer">{{ customer.mobile }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let customer"><mat-icon class="withPointer" (click)="onEdit(customer)">mode_edit</mat-icon></td>
+  </ng-container>
+  
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let customer"><mat-icon class="withPointer" (click)="onDelete(customer)">delete</mat-icon></td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<button (click)="showTable()">ShowTable</button>
