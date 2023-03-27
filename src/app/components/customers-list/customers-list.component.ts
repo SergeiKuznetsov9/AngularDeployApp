@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { HttpCustomerService } from 'src/app/shared/services/http/httpCustomer.service';
 
 @Component({
@@ -7,9 +8,10 @@ import { HttpCustomerService } from 'src/app/shared/services/http/httpCustomer.s
   templateUrl: './customers-list.component.html',
   styleUrls: ['./customers-list.component.css']
 })
-export class CustomersListComponent {
+export class CustomersListComponent implements OnInit, OnDestroy {
 
   @ViewChild('customersTable') customersTable!: MatTable<any>;
+  subscriptionOnCustomresChange!: Subscription;
 
 
   displayedColumns: string[] = ['name', 'location', 'email', 'mobile', 'edit', 'delete']
@@ -17,8 +19,15 @@ export class CustomersListComponent {
   constructor(public httpCustomer: HttpCustomerService) {}
 
   ngOnInit(): void {
-    this.getData()
+    this.getData();
+    this.subscriptionOnCustomresChange = this.httpCustomer.updateCustomersEmitter.subscribe({
+      next: () => this.customersTable.renderRows()
+    })
   }
+
+  ngOnDestroy(): void {
+    this.subscriptionOnCustomresChange.unsubscribe()
+  } 
 
   getData() {
     this.httpCustomer.getData()
@@ -33,8 +42,5 @@ export class CustomersListComponent {
 
   }
 
-  showTable() {
-    this.customersTable.renderRows()
-  }
 
 }

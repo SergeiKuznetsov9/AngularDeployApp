@@ -6,33 +6,31 @@ import { HttpCustomerService } from 'src/app/shared/services/http/httpCustomer.s
 @Component({
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
-  styleUrls: ['./customer-details.component.css']
+  styleUrls: ['./customer-details.component.css'],
 })
 export class CustomerDetailsComponent {
-
   form = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     mobile: ['', [Validators.required, Validators.minLength(8)]],
     location: ['', [Validators.required]],
-  })
+  });
 
-  constructor(private httpCustomer: HttpCustomerService, private fb: FormBuilder) { }
+  constructor(
+    private httpCustomer: HttpCustomerService,
+    private fb: FormBuilder
+  ) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   onSubmit() {
-    this.httpCustomer.createData(this.form.value as ICustomer)
+    this.httpCustomer.createData(this.form.value as ICustomer);
   }
 
-
-/*   const customer: ICustomer = {
+  /*   const customer: ICustomer = {
     name: 'Bill',
     email: 'Bill@yandex.ru',
     mobile: '375 25 4684198',
     location: 'Mozir`',
   }; */
-
 }
